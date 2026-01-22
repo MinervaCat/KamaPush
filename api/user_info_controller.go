@@ -4,6 +4,7 @@ import (
 	pb "KamaPush/pb"
 	"KamaPush/pkg/constants"
 	"KamaPush/pkg/zlog"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -11,6 +12,7 @@ import (
 // Register 注册
 func Register(c *gin.Context) {
 	var registerReq pb.RegisterRequest
+	zlog.Info("开始登陆")
 	if err := c.BindJSON(&registerReq); err != nil {
 		zlog.Error(err.Error())
 		c.JSON(http.StatusOK, gin.H{
@@ -19,6 +21,7 @@ func Register(c *gin.Context) {
 		})
 		return
 	}
+	zlog.Info(fmt.Sprintf("the req is :%v", registerReq))
 	rsp, err := grpcClient.Register(ctx, &registerReq)
 	if err != nil {
 		zlog.Error(err.Error())
