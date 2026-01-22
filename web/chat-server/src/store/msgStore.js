@@ -47,7 +47,8 @@ class MessageStore {
         try {
             const req = {
                 user_id: store.state.userInfo.user_id,
-                seq: this.state.msgSeq,
+                start_seq: this.state.msgSeq,
+                end_seq: -1,
             };
             console.log(req);
             const rsp = await axios.post(
