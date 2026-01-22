@@ -19,7 +19,6 @@ func init() {
 	if err != nil {
 		zlog.Error(err.Error())
 	}
-	defer conn.Close()
 	grpcClient = pb.NewKamaChatClient(conn)
 }
 
