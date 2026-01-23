@@ -1346,25 +1346,9 @@ export default {
       router.push("/chat/" + group.group_id);
     };
 
-    const handleShowUserSessionList = async () => {
-      try {
-        data.conversationListReq.user_id = data.userInfo.user_id;
-        const userSessionListRsp = await axios.post(
-          store.state.backendUrl + "/conversation/getConversationList",
-            data.conversationListReq
-        );
-        if (userSessionListRsp.data.data) {
-          for (let i = 0; i < userSessionListRsp.data.data.length; i++) {
-            if (!userSessionListRsp.data.data[i].avatar.startsWith("http")) {
-              userSessionListRsp.data.data[i].avatar =
-                store.state.backendUrl + userSessionListRsp.data.data[i].avatar;
-            }
-          }
-        }
-        data.userSessionList = userSessionListRsp.data.data;
-      } catch (error) {
-        console.error(error);
-      }
+    const handleShowUserSessionList = () => {
+      data.userSessionList = messageStore.getAllSessions();
+      console.log("ShowUserSessionList", data.userSessionList)
     };
     const handleHideUserSessionList = () => {
       data.userSessionList = [];

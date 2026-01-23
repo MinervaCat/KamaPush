@@ -294,9 +294,9 @@ export default {
       router.push("/chat/" + group.group_id);
     };
 
-    const handleShowUserSessionList = async () => {
+    const handleShowUserSessionList = () => {
       data.userSessionList = messageStore.getAllSessions();
-      console.log("ShowUserSessionList", data.userSessionList())
+      console.log("ShowUserSessionList", data.userSessionList)
       // try {
       //   data.conversationListReq.user_id = data.userInfo.user_id;
       //   const userSessionListRsp = await axios.post(
