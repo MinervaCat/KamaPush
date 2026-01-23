@@ -249,6 +249,7 @@ import { useStore } from "vuex";
 import axios from "axios";
 import Modal from "@/components/Modal.vue";
 import NavigationModal from "@/components/NavigationModal.vue";
+import {useMessageStore} from "@/store/msgStore";
 export default {
   name: "ContactList",
   components: {
@@ -259,6 +260,7 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
+    const messageStore = useMessageStore()
     const data = reactive({
       chatMessage: "",
       chatName: "",
@@ -293,24 +295,26 @@ export default {
     };
 
     const handleShowUserSessionList = async () => {
-      try {
-        data.conversationListReq.user_id = data.userInfo.user_id;
-        const userSessionListRsp = await axios.post(
-          store.state.backendUrl + "/conversation/getConversationList",
-          data.conversationListReq
-        );
-        if (userSessionListRsp.data.data) {
-          for (let i = 0; i < userSessionListRsp.data.data.length; i++) {
-            if (!userSessionListRsp.data.data[i].avatar.startsWith("http")) {
-              userSessionListRsp.data.data[i].avatar =
-                store.state.backendUrl + userSessionListRsp.data.data[i].avatar;
-            }
-          }
-        }
-        data.userSessionList = userSessionListRsp.data.data;
-      } catch (error) {
-        console.error(error);
-      }
+      data.userSessionList = messageStore.getAllSessions;
+      console.log("ShowUserSessionList", data.userSessionList)
+      // try {
+      //   data.conversationListReq.user_id = data.userInfo.user_id;
+      //   const userSessionListRsp = await axios.post(
+      //     store.state.backendUrl + "/conversation/getConversationList",
+      //     data.conversationListReq
+      //   );
+      //   if (userSessionListRsp.data.data) {
+      //     for (let i = 0; i < userSessionListRsp.data.data.length; i++) {
+      //       if (!userSessionListRsp.data.data[i].avatar.startsWith("http")) {
+      //         userSessionListRsp.data.data[i].avatar =
+      //           store.state.backendUrl + userSessionListRsp.data.data[i].avatar;
+      //       }
+      //     }
+      //   }
+      //   data.userSessionList = userSessionListRsp.data.data;
+      // } catch (error) {
+      //   console.error(error);
+      // }
     };
     const handleHideUserSessionList = () => {
       data.userSessionList = [];

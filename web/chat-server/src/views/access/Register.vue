@@ -103,6 +103,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { useStore } from "vuex";
+import {useMessageStore} from "@/store/msgStore";
 export default {
   name: "Register",
   setup() {
@@ -116,6 +117,7 @@ export default {
     });
     const router = useRouter();
     const store = useStore();
+    const messageStore = useMessageStore()
     const handleRegister = async () => {
       try {
         if (
@@ -150,6 +152,7 @@ export default {
               store.state.backendUrl + response.data.data.avatar;
           }
           store.commit("setUserInfo", response.data.data);
+          messageStore.setCurrentUserId(response.data.data.user_id)
           // 准备创建websocket连接
           const wsUrl =
             store.state.wsUrl + "/wss?user_id=" + response.data.data.user_id;

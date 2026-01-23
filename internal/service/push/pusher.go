@@ -119,6 +119,7 @@ func (c *Client) Read() {
 	for {
 		// 阻塞有一定隐患，因为下面要处理缓冲的逻辑，但是可以先不做优化，问题不大
 		_, jsonMessage, err := c.Conn.ReadMessage() // 阻塞状态
+		zlog.Info("收到消息：" + string(jsonMessage))
 		if err != nil {
 			zlog.Error(err.Error())
 			return // 直接断开websocket

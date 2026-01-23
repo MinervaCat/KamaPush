@@ -46,7 +46,7 @@ class MessageStore {
         console.log("开始获取所有聊天")
         try {
             const req = {
-                user_id: store.state.userInfo.user_id,
+                user_id: this.currentUserId,
                 start_seq: this.state.msgSeq,
                 end_seq: -1,
             };
@@ -62,6 +62,32 @@ class MessageStore {
                         this.state.sessionMessages.set(rsp.data.data[i].conversation_id, new Set())
                     }
                     this.state.sessionMessages.get(rsp.data.data[i].conversation_id).add(rsp.data.data[i])
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async fetchAllConversation() {
+        console.log("开始获取所有会话")
+        try {
+            const req = {
+                user_id: this.currentUserId,
+            };
+            console.log(req);
+            const rsp = await axios.post(
+                store.state.backendUrl + "/conversation/getConversationList",
+                req
+            );
+            console.log(rsp);
+            if (rsp.data.data) {
+                for (let i = 0; i < rsp.data.data.length; i++) {
+                    if (!this.state.sessions.has(rsp.data.data[i].conversation_id)) {
+                        this.state.sessions.set(rsp.data.data[i].conversation_id, new Set())
+                        this.state.sortedSessionIds.push(rsp.data.data[i].conversation_id)
+                    }
+                    this.state.sessions.get(rsp.data.data[i].conversation_id).add(rsp.data.data[i])
                 }
             }
         } catch (error) {
@@ -116,6 +142,7 @@ class MessageStore {
     getSession(sessionId) {
         return this.state.sessions.get(sessionId) || null
     }
+
 
     /**
      * 获取所有会话（按最后消息时间排序）
@@ -599,7 +626,10 @@ export function useMessageStore() {
         getSessionMsg: store.getSessionMsg.bind(store),
         getSessionMessages: store.getSessionMessages.bind(store),
         updateMessage: store.updateMessage.bind(store),
+
         fetchAllMessage: store.fetchAllMessage.bind(store),
+        fetchAllConversation: store.fetchAllConversation.bind(store),
+        // getAllConversation: store.getAllConversation.bind(store),
 
         upsertUser: store.upsertUser.bind(store),
         getUser: store.getUser.bind(store),

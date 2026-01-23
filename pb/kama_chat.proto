@@ -118,5 +118,4 @@ message ResponseForApplyList {
 message RespondToApply {
   int64 user_id = 1;
   int64 friend_id = 2;
-  int32 type = 3;
 }

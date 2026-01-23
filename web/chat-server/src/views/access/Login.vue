@@ -101,8 +101,9 @@ export default {
                 store.state.backendUrl + response.data.data.avatar;
             }
             store.commit("setUserInfo", response.data.data);
-            messageStore.setCurrentUserId(store.state.userInfo.user_id)
-            await messageStore.fetchAllMessage()
+            messageStore.setCurrentUserId(response.data.data.user_id)
+            messageStore.fetchAllMessage()
+            messageStore.fetchAllConversation()
             // 准备创建websocket连接
             const wsUrl =
               store.state.wsUrl + "/wss?user_id=" + response.data.data.user_id;
