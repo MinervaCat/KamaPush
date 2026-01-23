@@ -1059,7 +1059,7 @@ export default {
       //   await getGroupMessageList();
       // }
       data.messageList = messageStore.getSessionMsg(router.currentRoute.value.params.id);
-
+      data.sessionId = router.currentRoute.value.params.id
       console.log(data.messageList)
       store.state.socket.onmessage = (jsonMessage) => {
         const message = JSON.parse(jsonMessage.data);
@@ -1153,7 +1153,7 @@ export default {
         //   await getGroupMessageList();
         // }
         data.messageList = messageStore.getSessionMsg(router.currentRoute.value.params.id);
-
+        data.sessionId = router.currentRoute.value.params.id
         console.log(data.messageList)
         store.state.socket.onmessage = (jsonMessage) => {
           const message = JSON.parse(jsonMessage.data);
