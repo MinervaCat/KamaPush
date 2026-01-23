@@ -83,11 +83,13 @@ class MessageStore {
             console.log(rsp);
             if (rsp.data.data) {
                 for (let i = 0; i < rsp.data.data.length; i++) {
-                    if (!this.state.sessions.has(rsp.data.data[i].conversation_id)) {
-                        this.state.sessions.set(rsp.data.data[i].conversation_id, new Set())
-                        this.state.sortedSessionIds.push(rsp.data.data[i].conversation_id)
+                    const conversationId = rsp.data.data[i].conversation_id;
+                    // 直接存储对象，覆盖之前的值（即只保留最新的一条）
+                    if (!rsp.data.data[i].avatar) {
+                        rsp.data.data[i].avatar = "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"
                     }
-                    this.state.sessions.get(rsp.data.data[i].conversation_id).add(rsp.data.data[i])
+                    this.state.sessions.set(conversationId, rsp.data.data[i]);
+                    this.state.sortedSessionIds.push(conversationId);
                 }
             }
         } catch (error) {
