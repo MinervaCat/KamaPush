@@ -27,7 +27,7 @@ logPath = "./logs.log"
 
 [kafkaConfig]
 messageMode = "kafka"# 消息模式 channel or kafka
-hostPort = "127.0.0.1:9092" # "127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:9094" 多个kafka服务器
+hostPort = "101.200.184.252:9092" # "127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:9094" 多个kafka服务器
 loginTopic = "login"
 conversationImTopic = "conversation_im_topic"
 userImTopic = "user_im_topic"
