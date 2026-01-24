@@ -1498,6 +1498,9 @@ export default {
       router.push("/chat/sessionlist");
     };
     const sendMessage = () => {
+      console.log("sendMessage", data.sessionId)
+      console.log(router.currentRoute.value.params.id)
+
       const chatMessageRequest = {
         session_id: router.currentRoute.value.params.id,
         type: 0,
