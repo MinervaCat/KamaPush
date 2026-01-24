@@ -38,7 +38,7 @@ func GetConversationList(c *gin.Context) {
 			LastReadSeq:    con.LastReadSeq,
 			NotifyType:     int8(con.NotifyType),
 			IsTop:          int8(con.IsTop),
-			Name:           con.Name,
+			FriendId:       con.FriendId,
 		}
 		rsp = append(rsp, conversation)
 	}
@@ -57,7 +57,7 @@ type ConversationResponse struct {
 	LastReadSeq    int64     `json:"last_read_seq"`
 	NotifyType     int8      ` json:"notify_type"`
 	IsTop          int8      `json:"is_top"`
-	Name           string    `json:"name"`
+	FriendId       int64     `json:"friend_id"`
 }
 
 // DeleteSession 删除会话
