@@ -1509,7 +1509,7 @@ export default {
         send_id: data.userInfo.user_id,
         send_name: data.userInfo.nickname,
         send_avatar: data.userInfo.avatar,
-        receive_id: data.contactInfo.contact_id,
+        receive_id: 0,
         file_size: getFileSize(0),
         file_name: "",
         file_type: "",
