@@ -38,7 +38,7 @@
                     @click="handleToChat(conversation)"
                   >
                     <img :src="conversation.avatar" class="sessionlist-avatar" />
-                    {{ conversation.conversation_id }}
+                    {{ conversation.name }}
                   </el-menu-item>
                 </el-menu>
                 <el-menu

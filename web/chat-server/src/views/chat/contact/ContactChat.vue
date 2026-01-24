@@ -38,7 +38,7 @@
                     @click="handleToChat(conversation)"
                   >
                     <img :src="conversation.avatar" class="sessionlist-avatar" />
-                    {{ conversation.conversation_id }}
+                    {{ conversation.name }}
                   </el-menu-item>
                 </el-menu>
                 <el-menu
@@ -1499,7 +1499,7 @@ export default {
     };
     const sendMessage = () => {
       const chatMessageRequest = {
-        session_id: data.sessionId,
+        session_id: router.currentRoute.value.params.id,
         type: 0,
         content: data.chatMessage,
         url: "",

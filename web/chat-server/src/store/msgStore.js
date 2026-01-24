@@ -69,6 +69,28 @@ class MessageStore {
         }
     }
 
+    async fetchAllUser() {
+        console.log("开始获取所有用户")
+        const req = {
+            user_id: this.currentUserId,
+        };
+        const rsp = await axios.post(
+            store.state.backendUrl + "/contact/getUserList",
+            req
+        );
+        if (rsp.data.data) {
+            for (let i = 0; i < rsp.data.data.length; i++) {
+                const friendId = rsp.data.data[i].user_id;
+                // 直接存储对象，覆盖之前的值（即只保留最新的一条）
+                // if (!rsp.data.data[i].avatar) {
+                //     rsp.data.data[i].avatar = "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"
+                // }
+                this.state.users.set(friendId, rsp.data.data[i]);
+                // this.state.sortedSessionIds.push(conversationId);
+            }
+        }
+    }
+
     async fetchAllConversation() {
         console.log("开始获取所有会话")
         try {
@@ -631,6 +653,7 @@ export function useMessageStore() {
 
         fetchAllMessage: store.fetchAllMessage.bind(store),
         fetchAllConversation: store.fetchAllConversation.bind(store),
+        fetchAllUser: store.fetchAllUser.bind(store),
         // getAllConversation: store.getAllConversation.bind(store),
 
         upsertUser: store.upsertUser.bind(store),
