@@ -93,6 +93,7 @@ func (p *pusher) Start() {
 }
 
 func (p *pusher) Push(ctx context.Context, req *pb.PushRequest) (*pb.Response, error) {
+	zlog.Info("grpc调用Push")
 	p.messageChan <- &MessagePush{
 		UserId:  req.UserId,
 		Message: req.Message,
