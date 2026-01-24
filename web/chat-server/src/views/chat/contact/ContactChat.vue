@@ -38,7 +38,7 @@
                     @click="handleToChat(conversation)"
                   >
                     <img :src="conversation.avatar" class="sessionlist-avatar" />
-                    {{ conversation.name }}
+                    {{ conversation.friend_id }}
                   </el-menu-item>
                 </el-menu>
                 <el-menu
@@ -967,6 +967,7 @@ export default {
       chatMessage: "",
       chatName: "",
       userInfo: store.state.userInfo,
+      receive_id: 0,
       contactSearch: "",
       createGroupReq: {
         owner_id: "",
@@ -1502,14 +1503,14 @@ export default {
       console.log(router.currentRoute.value.params.id)
 
       const chatMessageRequest = {
-        session_id: router.currentRoute.value.params.id,
+        session_id: data.sessionId,
         type: 0,
         content: data.chatMessage,
         url: "",
         send_id: data.userInfo.user_id,
         send_name: data.userInfo.nickname,
         send_avatar: data.userInfo.avatar,
-        receive_id: 0,
+        receive_id: messageStore.getSession(data.sessionId).friend_id,
         file_size: getFileSize(0),
         file_name: "",
         file_type: "",

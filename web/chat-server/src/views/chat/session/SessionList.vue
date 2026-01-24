@@ -39,7 +39,6 @@
                   >
                     <img :src="conversation.avatar" class="sessionlist-avatar" />
                     {{ conversation.friend_id }}
-                    {{ messageStore.getUser(conversation.friend_id).nickname }}
                   </el-menu-item>
                 </el-menu>
                 <el-menu
