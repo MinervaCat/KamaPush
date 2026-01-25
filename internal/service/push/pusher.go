@@ -66,6 +66,7 @@ func (p *pusher) Start() {
 		select {
 		case message := <-p.messageChan:
 			{
+				zlog.Info("在循环中收到消息")
 				userId, msg := message.UserId, message.Message
 				client, exists := p.Clients[userId]
 				if !exists {
