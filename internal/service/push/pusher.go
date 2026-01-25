@@ -117,6 +117,8 @@ func (p *pusher) Push(ctx context.Context, req *pb.PushRequest) (*pb.Response, e
 		UserId:  req.UserId,
 		Message: req.Message,
 	}
+	zlog.Info(string(req.Message))
+	log.Println(m)
 	zlog.Info("grpc调用Push中")
 	p.messageChan <- m
 	zlog.Info("grpc调用Push完成")
