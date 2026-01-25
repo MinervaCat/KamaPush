@@ -99,7 +99,7 @@ func (p *pusher) Start() {
 					log.Fatal(err.Error())
 				}
 			}
-		case <-time.After(5 * time.Second):
+		case <-time.After(15 * time.Second):
 			{
 				zlog.Debug("主循环等待中...")
 			}
