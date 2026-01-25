@@ -55,7 +55,7 @@ func (p *pusher) Start() {
 	}
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterPushServer(grpcServer, p)
+	pb.RegisterPushServer(grpcServer, &pusher{})
 
 	go func() {
 		zlog.Info(fmt.Sprintf("go func() 调用堆栈: %s",
@@ -136,7 +136,7 @@ func (p *pusher) Push(ctx context.Context, req *pb.PushRequest) (*pb.Response, e
 	zlog.Info(string(req.Message))
 	log.Println(m)
 	zlog.Info("grpc调用Push中")
-	p.messageChan <- m
+	Pusher.messageChan <- m
 	zlog.Info("grpc调用Push完成")
 	return &pb.Response{Msg: "已处理", Ret: 0}, nil
 }
