@@ -65,6 +65,22 @@ func (p *pusher) Start() {
 			zlog.Error(err.Error())
 		}
 	}()
+	go func() {
+		for range time.Tick(15 * time.Second) {
+			zlog.Info(fmt.Sprintf(
+				"通道监控 - messageChan: %d/%d, Login: %d/%d, Logout: %d/%d",
+				len(p.messageChan), cap(p.messageChan),
+				len(p.Login), cap(p.Login),
+				len(p.Logout), cap(p.Logout),
+			))
+
+			// 如果 messageChan 有消息但没处理
+			if len(p.messageChan) > 0 {
+				zlog.Warn(fmt.Sprintf("WARNING: messageChan 中有 %d 条消息未处理!",
+					len(p.messageChan)))
+			}
+		}
+	}()
 	zlog.Info("Pusher开始服务")
 	zlog.Info(fmt.Sprintf("Start() 调用堆栈: %s",
 		debug.Stack()))
