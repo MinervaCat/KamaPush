@@ -152,7 +152,7 @@ export default {
               store.state.backendUrl + response.data.data.avatar;
           }
           store.commit("setUserInfo", response.data.data);
-          messageStore.setCurrentUserId(response.data.data.user_id)
+          await messageStore.setCurrentUserId(response.data.data.user_id)
           // 准备创建websocket连接
           const wsUrl =
             store.state.wsUrl + "/wss?user_id=" + response.data.data.user_id;
@@ -163,6 +163,7 @@ export default {
           };
           store.state.socket.onmessage = (message) => {
             console.log("收到消息：", message.data);
+            messageStore.receiveMessage(message.data)
           };
           store.state.socket.onclose = () => {
             console.log("WebSocket连接已关闭");

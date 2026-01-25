@@ -115,6 +115,7 @@ export default {
             };
             store.state.socket.onmessage = (message) => {
               console.log("收到消息：", message.data);
+              messageStore.receiveMessage(message.data)
             };
             store.state.socket.onclose = () => {
               console.log("WebSocket连接已关闭");

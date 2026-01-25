@@ -118,6 +118,12 @@ class MessageStore {
             console.error(error);
         }
     }
+
+    receiveMessage(message) {
+        console.log("处理接收消息");
+        this.state.sessionMessages.get(message.msg.conversation_id).add(message.msg)
+        // this.state.sessionMessages.get(rsp.data.data[i].conversation_id).add(rsp.data.data[i])
+    }
     // ============ 会话管理 ============
 
     /**
@@ -655,6 +661,7 @@ export function useMessageStore() {
         fetchAllConversation: store.fetchAllConversation.bind(store),
         fetchAllUser: store.fetchAllUser.bind(store),
         // getAllConversation: store.getAllConversation.bind(store),
+        receiveMessage: store.receiveMessage.bind(store),
 
         upsertUser: store.upsertUser.bind(store),
         getUser: store.getUser.bind(store),
