@@ -16,6 +16,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"time"
 )
 
 type pusher struct {
@@ -93,6 +94,10 @@ func (p *pusher) Start() {
 					log.Fatal(err.Error())
 				}
 			}
+		case <-time.After(5 * time.Second):
+			{
+				zlog.Debug("主循环等待中...")
+			}
 
 		}
 
@@ -101,10 +106,12 @@ func (p *pusher) Start() {
 
 func (p *pusher) Push(ctx context.Context, req *pb.PushRequest) (*pb.Response, error) {
 	zlog.Info("grpc调用Push")
-	p.messageChan <- &MessagePush{
+	m := &MessagePush{
 		UserId:  req.UserId,
 		Message: req.Message,
 	}
+	zlog.Info("grpc调用Push中")
+	p.messageChan <- m
 	zlog.Info("grpc调用Push完成")
 	return &pb.Response{Msg: "已处理", Ret: 0}, nil
 }
