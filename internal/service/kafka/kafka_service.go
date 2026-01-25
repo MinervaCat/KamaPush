@@ -24,7 +24,7 @@ func (k *kafkaService) KafkaInit2() {
 	//k.CreateTopic()
 	kafkaConfig := myconfig.GetConfig().KafkaConfig
 	k.ConversationWriter = &kafka.Writer{
-		Addr:                   kafka.TCP(kafkaConfig.HostPort),
+		Addr:                   kafka.TCP("101.43.155.144:9092"),
 		Topic:                  kafkaConfig.ConversationImTopic,
 		Balancer:               &kafka.Hash{},
 		WriteTimeout:           kafkaConfig.Timeout * time.Second,
