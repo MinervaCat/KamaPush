@@ -98,7 +98,7 @@ func (p *pusher) Push(ctx context.Context, req *pb.PushRequest) (*pb.Response, e
 		UserId:  req.UserId,
 		Message: req.Message,
 	}
-	return &pb.Response{}, nil
+	return &pb.Response{Msg: "已处理", Ret: 0}, nil
 }
 
 var upgrader = websocket.Upgrader{
@@ -144,6 +144,7 @@ func (c *Client) Write() {
 	zlog.Info("ws write goroutine start")
 	for messageBack := range c.SendBack { // 阻塞状态
 		// 通过 WebSocket 发送消息
+		zlog.Info("收到消息：" + string(messageBack))
 		err := c.Conn.WriteMessage(websocket.TextMessage, messageBack)
 		if err != nil {
 			zlog.Error(err.Error())
