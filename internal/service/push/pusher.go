@@ -16,6 +16,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"runtime/debug"
 	"time"
 )
 
@@ -57,12 +58,16 @@ func (p *pusher) Start() {
 	pb.RegisterPushServer(grpcServer, &pusher{})
 
 	go func() {
+		zlog.Info(fmt.Sprintf("go func() 调用堆栈: %s",
+			debug.Stack()))
 		err = grpcServer.Serve(listen)
 		if err != nil {
 			zlog.Error(err.Error())
 		}
 	}()
 	zlog.Info("Pusher开始服务")
+	zlog.Info(fmt.Sprintf("Start() 调用堆栈: %s",
+		debug.Stack()))
 	for {
 		select {
 		case message := <-p.messageChan:
@@ -106,6 +111,8 @@ func (p *pusher) Start() {
 
 func (p *pusher) Push(ctx context.Context, req *pb.PushRequest) (*pb.Response, error) {
 	zlog.Info("grpc调用Push")
+	zlog.Info(fmt.Sprintf("Push() 调用堆栈: %s",
+		debug.Stack()))
 	m := &MessagePush{
 		UserId:  req.UserId,
 		Message: req.Message,
