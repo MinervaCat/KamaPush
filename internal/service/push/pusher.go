@@ -36,10 +36,10 @@ var Pusher *pusher
 func init() {
 	if Pusher == nil {
 		Pusher = &pusher{
-			messageChan: make(chan *MessagePush),
+			messageChan: make(chan *MessagePush, 10),
 			Clients:     make(map[int64]*Client),
-			Login:       make(chan *Client),
-			Logout:      make(chan *Client),
+			Login:       make(chan *Client, 5),
+			Logout:      make(chan *Client, 5),
 		}
 
 	}
@@ -67,7 +67,12 @@ func (p *pusher) Start() {
 		case message := <-p.messageChan:
 			{
 				userId, msg := message.UserId, message.Message
-				p.Clients[userId].SendBack <- msg
+				client, exists := p.Clients[userId]
+				if !exists {
+					zlog.Info(fmt.Sprintf("用户 %d 不存在，忽略消息", userId))
+					continue // 跳过处理
+				}
+				client.SendBack <- msg
 				zlog.Info("分发msg完成")
 			}
 		case client := <-p.Login:
