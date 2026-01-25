@@ -55,7 +55,7 @@ func (p *pusher) Start() {
 	}
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterPushServer(grpcServer, &pusher{})
+	pb.RegisterPushServer(grpcServer, Pusher)
 
 	go func() {
 		zlog.Info(fmt.Sprintf("go func() 调用堆栈: %s",
