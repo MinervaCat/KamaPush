@@ -121,7 +121,7 @@ class MessageStore {
 
     receiveMessage(message) {
         console.log("处理接收消息");
-        this.state.sessionMessages.get(message.msg.conversation_id).add(message.msg)
+        this.state.sessionMessages.get(message.conversation_id).push(message)
         // this.state.sessionMessages.get(rsp.data.data[i].conversation_id).add(rsp.data.data[i])
     }
     // ============ 会话管理 ============

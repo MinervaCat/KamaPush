@@ -1065,8 +1065,8 @@ export default {
       store.state.socket.onmessage = (jsonMessage) => {
         const message = JSON.parse(jsonMessage.data);
         console.log("message=",message);
-        if (message.msg.conversation_id == data.sessionId) {
-          data.messageList.push(message.msg);
+        if (message.conversation_id == data.sessionId) {
+          data.messageList.push(message);
         }
       }
       // store.state.socket.onmessage = (jsonMessage) => {
@@ -1166,8 +1166,8 @@ export default {
         store.state.socket.onmessage = (jsonMessage) => {
           const message = JSON.parse(jsonMessage.data);
           console.log("message=",message);
-          if (message.msg.conversation_id == data.sessionId) {
-            data.messageList.push(message.msg);
+          if (message.conversation_id == data.sessionId) {
+            data.messageList.push(message);
           }
         }
         // store.state.socket.onmessage = (jsonMessage) => {
