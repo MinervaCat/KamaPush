@@ -1067,83 +1067,11 @@ export default {
         console.log("message=",message);
         if (message.conversation_id == data.sessionId) {
           data.messageList.push(message);
+          scrollToBottom();
         }
+        scrollToBottom();
       }
-      // store.state.socket.onmessage = (jsonMessage) => {
-      //   const message = JSON.parse(jsonMessage.data);
-      //   if (message.type != 3) {
-      //     if (
-      //       // 群聊过来的消息，且当前会话是该群聊
-      //       (message.receive_id[0] == "G" &&
-      //         message.receive_id == data.contactInfo.contact_id) ||
-      //       // 其他用户过来的消息，且当前会话是该用户
-      //       (message.receive_id[0] == "U" &&
-      //         message.receive_id == data.userInfo.user_id) ||
-      //       // 自己发送的消息
-      //       message.send_id == data.userInfo.user_id
-      //     ) {
-      //       console.log("收到消息：", message);
-      //       if (data.messageList == null) {
-      //         data.messageList = [];
-      //       }
-      //       data.messageList.push(message);
-      //       // messageStore.addMessage
-      //       scrollToBottom();
-      //     }
-      //     // 其他接受的消息都不显示在messageList中，而是通过切换页面或刷新页面getMessageList来获取
-      //   } else {
-      //     var messageAVdata = JSON.parse(message.av_data); // 后端message的该字段命名为av_data
-      //     if (messageAVdata.messageId === "CURRENT_PEERS") {
-      //       console.log(
-      //         "获取CURRENT_PEERS当前在线用户列表，curContactList:",
-      //         messageAVdata.messageData.curContactList
-      //       );
-      //       data.curContactList = messageAVdata.messageData.curContactList;
-      //     } else if (messageAVdata.messageId === "PEER_JOIN") {
-      //       console.log(
-      //         "接受到PEER_JOIN消息，contactId:",
-      //         messageAVdata.messagecontactId
-      //       );
-      //       data.curContactList.push(messageAVdata.messagecontactId);
-      //     } else if (messageAVdata.messageId === "PEER_LEAVE") {
-      //       console.log("接收到PEER_LEAVE消息：", data.userInfo.user_id);
-      //       receiveEndCall();
-      //     } else if (messageAVdata.messageId === "PROXY") {
-      //       console.log("接收到PROXY消息：", message);
-      //       if (messageAVdata.type === "start_call") {
-      //         ElNotification({
-      //           title: "消息提示",
-      //           message: `收到一条来自${message.send_name}的通话请求，请及时前往查看`,
-      //           type: "warning",
-      //         });
-      //         data.ableToReceiveOrRejectCall = true;
-      //         data.ableToStartCall = false;
-      //       } else if (messageAVdata.type === "receive_call") {
-      //         createOffer();
-      //       } else if (messageAVdata.type === "reject_call") {
-      //         endCall();
-      //       } else if (messageAVdata.type === "sdp") {
-      //         if (messageAVdata.messageData.sdp.type === "offer") {
-      //           handleOfferSdp(messageAVdata.messageData.sdp);
-      //         } else if (messageAVdata.messageData.sdp.type === "answer") {
-      //           handleAnswerSdp(messageAVdata.messageData.sdp);
-      //         } else {
-      //           console.log("不支持的sdp类型");
-      //         }
-      //       } else if (messageAVdata.type === "candidate") {
-      //         handleCandidate(messageAVdata.messageData.candidate);
-      //       } else {
-      //         console.log("不支持的proxy类型");
-      //       }
-      //     }
-      //     console.log("收到消息：", message);
-      //     if (data.messageList == null) {
-      //       data.messageList = [];
-      //     }
-      //     data.messageList.push(message);
-      //     scrollToBottom();
-      //   }
-      // };
+
       scrollToBottom();
       next();
     });
@@ -1168,90 +1096,9 @@ export default {
           console.log("message=",message);
           if (message.conversation_id == data.sessionId) {
             data.messageList.push(message);
+            scrollToBottom();
           }
         }
-        // store.state.socket.onmessage = (jsonMessage) => {
-        //   const message = JSON.parse(jsonMessage.data);
-        //   // type UserMsg struct {
-        //   //   UserId int64      `json:"user_id"`
-        //   //   Msg    *model.Msg `json:"msg"`
-        //   //   Seq    int64      `json:"seq"`
-        //   // }
-        //
-        //   if (message.type != 3) {
-        //     if (
-        //       // 群聊过来的消息，且当前会话是该群聊
-        //       (message.receive_id[0] == "G" &&
-        //         message.receive_id == data.contactInfo.contact_id) ||
-        //       // 其他用户过来的消息，且当前会话是该用户
-        //       (message.receive_id[0] == "U" &&
-        //         message.receive_id == data.userInfo.user_id) ||
-        //       // 自己发送的消息
-        //       message.send_id == data.userInfo.user_id
-        //     ) {
-        //       console.log("收到消息：", message);
-        //       if (data.messageList == null) {
-        //         data.messageList = [];
-        //       }
-        //       data.messageList.push(message);
-        //       scrollToBottom();
-        //     }
-        //     // 其他接受的消息都不显示在messageList中，而是通过切换页面或刷新页面getMessageList来获取
-        //   } else {
-        //     var messageAVdata = JSON.parse(message.av_data); // 后端message的该字段命名为av_data
-        //     if (messageAVdata.messageId === "CURRENT_PEERS") {
-        //       console.log(
-        //         "获取CURRENT_PEERS当前在线用户列表，curContactList:",
-        //         messageAVdata.messageData.curContactList
-        //       );
-        //       data.curContactList = messageAVdata.messageData.curContactList;
-        //     } else if (messageAVdata.messageId === "PEER_JOIN") {
-        //       console.log(
-        //         "接受到PEER_JOIN消息，contactId:",
-        //         messageAVdata.messagecontactId
-        //       );
-        //       data.curContactList.push(messageAVdata.messagecontactId);
-        //     } else if (messageAVdata.messageId === "PEER_LEAVE") {
-        //       console.log("接收到PEER_LEAVE消息：", data.userInfo.user_id);
-        //       receiveEndCall();
-        //     } else if (messageAVdata.messageId === "PROXY") {
-        //       console.log("接收到PROXY消息：", message);
-        //       if (messageAVdata.type === "start_call") {
-        //         ElNotification({
-        //           title: "消息提示",
-        //           message: `收到一条来自${message.send_name}的通话请求，请及时前往查看`,
-        //           type: "warning",
-        //         });
-        //         data.ableToReceiveOrRejectCall = true;
-        //         data.ableToStartCall = false;
-        //       } else if (messageAVdata.type === "reject_call") {
-        //         endCall();
-        //       } else if (messageAVdata.type === "receive_call") {
-        //         console.log("接收到receive_call消息", data.userInfo.nickname);
-        //         createOffer();
-        //       } else if (messageAVdata.type === "sdp") {
-        //         if (messageAVdata.messageData.sdp.type === "offer") {
-        //           handleOfferSdp(messageAVdata.messageData.sdp);
-        //         } else if (messageAVdata.messageData.sdp.type === "answer") {
-        //           handleAnswerSdp(messageAVdata.messageData.sdp);
-        //         } else {
-        //           console.log("不支持的sdp类型");
-        //         }
-        //       } else if (messageAVdata.type === "candidate") {
-        //         handleCandidate(messageAVdata.messageData.candidate);
-        //       } else {
-        //         console.log("不支持的proxy类型");
-        //       }
-        //     }
-        //     console.log("收到消息：", message);
-        //     if (data.messageList == null) {
-        //       data.messageList = [];
-        //     }
-        //     data.messageList.push(message);
-        //     scrollToBottom();
-        //   }
-        // };
-        scrollToBottom();
       } catch (error) {
         console.error(error);
       }
