@@ -59,9 +59,9 @@ class MessageStore {
             if (rsp.data.data) {
                 for (let i = 0; i < rsp.data.data.length; i++) {
                     if (!this.state.sessionMessages.has(rsp.data.data[i].conversation_id)) {
-                        this.state.sessionMessages.set(rsp.data.data[i].conversation_id, new Set())
+                        this.state.sessionMessages.set(rsp.data.data[i].conversation_id, [])
                     }
-                    this.state.sessionMessages.get(rsp.data.data[i].conversation_id).add(rsp.data.data[i])
+                    this.state.sessionMessages.get(rsp.data.data[i].conversation_id).push(rsp.data.data[i])
                 }
             }
         } catch (error) {
