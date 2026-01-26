@@ -1066,7 +1066,7 @@ export default {
         const message = JSON.parse(jsonMessage.data);
         console.log("message=",message);
         if (message.msg.conversation_id == data.sessionId) {
-          data.messageList.push(message.msg)
+          data.messageList.push(message.msg);
         }
       }
       // store.state.socket.onmessage = (jsonMessage) => {
@@ -1167,7 +1167,7 @@ export default {
           const message = JSON.parse(jsonMessage.data);
           console.log("message=",message);
           if (message.msg.conversation_id == data.sessionId) {
-            data.messageList.push(message.msg)
+            data.messageList.push(message.msg);
           }
         }
         // store.state.socket.onmessage = (jsonMessage) => {
